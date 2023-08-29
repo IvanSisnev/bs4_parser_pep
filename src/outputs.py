@@ -64,7 +64,7 @@ def file_output(results: list, cli_args) -> None:
         logging.info(msg=f'Файл с результатами был сохранён: {results_path}')
         return None
     except IOError as exc:
-        error_msg: str = (f'Не удалось записать файл с результирующими '
+        error_msg: str = ('Не удалось записать файл с результирующими '
                           f'данными парсера {cli_args.mode}.')
         logging.exception(msg=error_msg, stack_info=True)
         raise SystemExit(error_msg) from exc

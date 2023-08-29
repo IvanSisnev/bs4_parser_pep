@@ -3,12 +3,13 @@
 """
 from urllib.parse import urljoin
 from pathlib import Path
-from typing import Final, Optional, Any
+from typing import Final, Optional, Any, Union
 import re
 import logging
 from bs4 import BeautifulSoup
 import requests_cache
 from tqdm import tqdm
+from collections import defaultdict
 
 from configs import configure_argument_parser, configure_logging
 from constants import (BASE_DIR, MAIN_DOC_URL, PEPS_URL, EXPECTED_STATUS,
@@ -171,7 +172,7 @@ def pep(session) -> Optional[list]:
                             f'теги {tag}.')
 
     # словарь для подсчета количества PEP каждого статуса
-    pep_statuses_totals: dict[str:int] = {}
+    pep_statuses_totals = defaultdict(int)
 
     # прохожу по списку PEP со статусбаром
     for a_pep in tqdm(all_peps_list):
@@ -207,20 +208,16 @@ def pep(session) -> Optional[list]:
                     f'\nстатус в таблице {EXPECTED_STATUS[status_abbr]}')
             )
         # обновляю количество в соответствующем статусе
-        if status in pep_statuses_totals:
-            pep_statuses_totals[status] += 1
-        else:
-            pep_statuses_totals[status]: int = 1
+        pep_statuses_totals[status] += 1
 
     # список кортежей для заполнения результатами
-    results: list[tuple] = []
+    results: list[Union[str, int]] = []
     # добавляю в список кортежи: статус и его количество
-    for status, quantity in pep_statuses_totals.items():
-        results.append((status, quantity))
+    results.extend(pep_statuses_totals.items())
     results.sort()
     # вставляю заголовки столбцов и общее количество PEP
     results.insert(0, RESULT_COLUMN_TITLES['pep'])
-    results.append(('Итого', sum(pep_statuses_totals.values())))
+    results.extend(('Итого', sum(pep_statuses_totals.values())))
 
     return results
 
