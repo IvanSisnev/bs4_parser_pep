@@ -2,9 +2,9 @@
 Конфигарутор проекта.
 """
 import argparse
-from pathlib import Path
 import logging
 from logging.handlers import RotatingFileHandler
+from pathlib import Path
 from typing import Any
 
 from constants import BASE_DIR, LOG_FORMAT, DT_FORMAT
@@ -60,4 +60,3 @@ def configure_logging() -> None:
         level=logging.INFO,
         handlers=(rotating_handler, logging.StreamHandler())
     )
-    return None

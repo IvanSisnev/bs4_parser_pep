@@ -1,15 +1,16 @@
 """
 Главный файл проекта.
 """
-from urllib.parse import urljoin
-from pathlib import Path
-from typing import Final, Optional, Any, Union
-import re
+from collections import defaultdict
 import logging
+from pathlib import Path
+import re
+from typing import Final, Optional, Any, Union
+from urllib.parse import urljoin
+
 from bs4 import BeautifulSoup
 import requests_cache
 from tqdm import tqdm
-from collections import defaultdict
 
 from configs import configure_argument_parser, configure_logging
 from constants import (BASE_DIR, MAIN_DOC_URL, PEPS_URL, EXPECTED_STATUS,

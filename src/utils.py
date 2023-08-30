@@ -4,6 +4,7 @@
 import logging
 from typing import Optional, Any
 from urllib.error import HTTPError, URLError
+
 from requests import RequestException
 
 from exceptions import ParserFindTagException

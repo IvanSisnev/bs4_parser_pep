@@ -1,11 +1,12 @@
 """
 Обработку выходных данных
 """
-from pathlib import Path
-import datetime
 import csv
+import datetime
 import logging
+from pathlib import Path
 from typing import Any
+
 from prettytable import PrettyTable
 
 from constants import BASE_DIR, DATETIME_FORMAT
