@@ -212,13 +212,13 @@ def pep(session) -> Optional[list]:
         pep_statuses_totals[status] += 1
 
     # список кортежей для заполнения результатами
-    results: list[Union[str, int]] = []
+    results: list[tuple[str, int]] = []
     # добавляю в список кортежи: статус и его количество
     results.extend(pep_statuses_totals.items())
     results.sort()
     # вставляю заголовки столбцов и общее количество PEP
     results.insert(0, RESULT_COLUMN_TITLES['pep'])
-    results.extend(('Итого', sum(pep_statuses_totals.values())))
+    results.append(('Итого', sum(pep_statuses_totals.values())))
 
     return results
 
